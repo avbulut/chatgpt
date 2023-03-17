@@ -56,9 +56,13 @@
          if (user != null) {
              var email_id = user.email;
              document.getElementById('user_para').innerHTML = email_id;
+
          }
          ll()
      } else {
+         $("#anasayfa_div").hide();
+         $("#kayıtol_div").show();
+         $("#login_div").hide();
      }
  });
  /*------------------------------------------------------------------------------------------------------------*/
@@ -138,6 +142,41 @@
     }
 }
 
+
+
+
+/*
+
+
+ document.getElementById('typedText').value = "";
+
+
+ function getRandIndex(maxLength) {
+     return Math.floor(Math.random() * maxLength);
+ }
+ var data;
+
+ function getCaptcha() {
+     var canvas = document.getElementById('canvas');
+     var pen = canvas.getContext('2d');
+     var captch = Math.random().toString(36).substring(2, 8);
+     document.getElementById('result').innerHTML = "Yenile";
+     pen.font = "30px Georgia";
+     pen.fillStyle = "grey";
+     pen.fillRect(0, 0, 400, 400);
+     pen.fillStyle = "orange";
+     maxLength = captch.length;
+     index1 = getRandIndex(maxLength);
+     index2 = getRandIndex(maxLength);
+
+     captch = captch.substring(0, index1 - 1) + captch[index1].toUpperCase() + captch.substring(index1 + 1, maxLength);
+     captch = captch.substring(0, index2 - 1) + captch[index2].toUpperCase() + captch.substring(index2 + 1, maxLength);
+
+     data = captch;
+     captch = captch.split('').join(' ');
+     pen.fillText(captch, 40, 40)
+ }*/
+
  function ll() {
     var browserName = navigator.userAgent;
   
@@ -167,6 +206,10 @@
         tarayici: browserName
       });
   
+      $("#login_div").hide();
+      $("#kayıtol_div").hide();
+      $("#anasayfa_div").show();
+  
       //------  EKLEYİNİZ ------- //
   
       chatYukle();
@@ -181,9 +224,13 @@
 
  document.getElementById('logout').onclick = function() {
      firebase.auth().signOut();
+     document.getElementById('kayıtol_div').style.display = "block";
+     document.getElementById('login_div').style.display = "none";
+     document.getElementById('anasayfa_div').style.display = "none";
      $("#kayıtol_div").show();
      $("#login_div").hide();
      $("#anasayfa_div").hide();
+     document.getElementById("typedText").value = "";
  }
 
  /*------------------------------------------------------------------------------------------------------------*/
@@ -251,3 +298,149 @@
      });
  }
 
+
+/*
+ var xml = new XMLHttpRequest();
+ xml.open("GET", "https://api.ipify.org")
+ xml.send();
+ xml.addEventListener("loadend", loaded);
+
+
+
+
+ function loaded(e) {
+     on(xml.responseText);
+
+
+ }
+
+ function on(ip) {
+     var num = 0;
+     firebase.database().ref("Ip").once("value").then(function(snap) {
+         var today = new Date();
+         var dd = String(today.getDate()).padStart(2, '0');
+         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+         var yyyy = today.getFullYear();
+         today = mm + '/' + dd + '/' + yyyy;
+         var dt = new Date(); // DATE() ile yeni bir tarih nesnesi oluşturuldu.
+         var saat = dt.getHours();
+         var dakika = dt.getMinutes();
+         var saniye = dt.getSeconds();
+         num = snap.numChildren();
+         num++;
+         firebase.database().ref("Ip").child(num.toString()).set({
+             Ip: ip,
+             createdDate: today + dt
+
+         });
+     });
+ }
+*/
+
+
+
+
+/*
+
+ function oldu(pos) {
+
+
+     var a = document.getElementById('enlem').innerHTML = pos.coords.latitude;
+     var b = document.getElementById('boylam').innerHTML = pos.coords.longitude;
+     var c = document.getElementById('dogruluk').innerHTML = `${pos.coords.accuracy} metre`;
+     var ç = document.getElementById('tarayici').innerHTML = (navigator.appName) + (navigator.appVersion);
+     document.getElementById('durum_mesaj').innerHTML = `Konum sonucu bulundu`;
+
+
+     // ÖRNEK
+     // https://www.google.com/maps?output=embed&q=40.989491199999996,29.104537600000004
+     mapembed = `https://www.google.com/maps?output=embed&z=15&q=${pos.coords.latitude},${pos.coords.longitude}`;
+
+
+     document.getElementById('harita').setAttribute('src', mapembed);
+     var today = new Date();
+     var dd = String(today.getDate()).padStart(2, '0');
+     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+     var yyyy = today.getFullYear();
+     today = mm + '/' + dd + '/' + yyyy;
+     var dt = new Date(); // DATE() ile yeni bir tarih nesnesi oluşturuldu.
+     var saat = dt.getHours();
+     var dakika = dt.getMinutes();
+     var saniye = dt.getSeconds();
+
+     firebase.database().ref('konum/').push().set({
+         createdDate: today + dt,
+         Enlem: a,
+         Boylam: b,
+         Tarayıcı: ç,
+         Doğruluk: c
+     });
+ }
+
+ function olmadi(hata) {
+     document.getElementById('durum_mesaj').innerHTML = `
+<strong>Hata Kodu</strong> ${hata.code} <br>
+<strong>Hata mesajı</strong> ${hata.message}
+`;
+
+ }
+
+*/
+
+ function sw() {
+     swal("Gizlilik Sözleşmesi", "Gizlilik", "info", {
+         buttons: false,
+     });
+ }
+
+
+
+ /*
+ var ImgName, ImgUrl;
+ var files = [];
+ var reader;
+
+
+
+ document.getElementById('upload').onclick = function(e) {
+     var input = document.createElement('input');
+
+     input.type = 'file';
+     input.click();
+
+
+     input.onchange = e => {
+         files = e.target.files;
+         reader = new FileReader();
+         reader = fileName = file.name;
+         reader.onload = function() {
+             document.getElementById("myimg").src = reader.result;
+         }
+         reader.readAsDataURL(this.documentFile);
+     }
+     input.click();
+     ImgName = document.getElementById('namebox').value;
+     var uploadTask = firebase.storage().ref('Images/' + ImgName).put(files[0]);
+
+     uploadTask.on('state_changed', function(snapshot) {
+             var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+             document.getElementById('upProgress').innerHTML = 'Upload' + progress + '%';
+
+         },
+         function(error) {
+             alert('Resim Gönderilemedi !');
+         },
+         function() {
+             uploadTask.snapshot.ref.getDownloadURL().then(function(url) {
+                 ImgUrl = url;
+                 var num = 0;
+                 num++;
+                 firebase.database().ref('Pictures/' + num).set({
+                     İd: num,
+                     Name: ImgName,
+                     Link: ImgUrl
+                 });
+                 alert('Resim Başarılı Bir Şekilde Gönderildi...');
+             });
+         });
+ }*/
