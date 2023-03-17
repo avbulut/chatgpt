@@ -16,13 +16,27 @@
  document.getElementById("defaultOpen").click();
 
 
+ // Your web app's Firebase configuration
+ var firebaseConfig = {
+    apiKey: "AIzaSyBUvlD4ovFcCvWcG9jYIcr7tGNIbQHJu38",
+    authDomain: "chatgpt-4-df1ac.firebaseapp.com",
+    databaseURL: "https://chatgpt-4-df1ac-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "chatgpt-4-df1ac",
+    storageBucket: "chatgpt-4-df1ac.appspot.com",
+    messagingSenderId: "1075966176561",
+    appId: "1:1075966176561:web:0035837b2b83c9f12f5410",
+    measurementId: "G-H0F7NHT42V"
+ };
+ // Initialize Firebase
+ firebase.initializeApp(firebaseConfig);
  /*------------------------------------------------------------------------------------------------------------*/
  document.getElementById('login').onclick = function() {
      var userEmail = document.getElementById('email_field').value;
      var userPass = document.getElementById('password_field').value;
      firebase.auth().signInWithEmailAndPassword(userEmail, userPass)
          .then(() => {
-            window.location.href ="index.html";
+            document.getElementById("kayıtol_div").style.display ="none";
+            document.getElementById("anasayfa_div").style.display ="block";
         }).catch(function(error) {
              var errorCode = error.code;
              var errorMessage = error.message;
@@ -33,7 +47,25 @@
                  buttons: "Tamam",
              });
          });
+         firebase.auth().onAuthStateChanged(function(user) {
+            var user = firebase.auth().currentUser;
+            document.getElementById("kayıtol_div").style.display ="none";
+            document.getElementById("anasayfa_div").style.display ="block";
+
+           if (user) {
+               if (user != null) {
+                   var email_id = user.email;
+                   document.getElementById('user_para').innerHTML = email_id;
+                   chatYukle();
+        
+               }
+           } else {
+            document.getElementById("kayıtol_div").style.display ="block";
+            document.getElementById("anasayfa_div").style.display ="none";           
+        }
+        });
  }
+
 
  /*------------------------------------------------------------------------------------------------------------*/
 
@@ -92,8 +124,6 @@
 
             $("#sign-in").show();
             $("#sign-up").hide();
-            $("#sifremyenile").hide();
-
             swal({
                 title: "Başarılı",
                 text: "Kaydınız başarılı bir şekilde alındı.",
@@ -106,8 +136,8 @@
         }).catch(error => {
             swal({
                 title: "Başarısız",
-                text: "Zaten böyle bir kayıt bulunmakta !",
-                icon: "info",
+                text: "Zaten girdiğiniz kayıt veri tabanında bulunmaktadır.",
+                icon: "success",
                 button: "Tamam",
             });
           });
@@ -150,7 +180,7 @@
   
       //------  EKLEYİNİZ ------- //
   
-     //chatYukle();
+     chatYukle();
     })
     .catch(error => {
       console.log("Error:", error);
@@ -159,6 +189,105 @@
 
 
 
+  document.getElementById('logout').onclick = function() {
+    firebase.auth().signOut();
+    window.location.href = "register.html";
+}
+
+
+document.getElementById('mesajGonder').onclick = function() {
+    var mesaj = $("#mesaj").val();
+    if (mesaj != "") {
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        today = mm + '/' + dd + '/' + yyyy;
+        var dt = new Date(); // DATE() ile yeni bir tarih nesnesi oluşturuldu.
+        var saat = dt.getHours();
+        var dakika = dt.getMinutes();
+        var user2 = firebase.auth().currentUser;
+        var email_id2 = user2.email;
+        var saniye = dt.getSeconds();
+        var messageKey = firebase.database().ref("chats/").push().key; //Rastgele bir mesaj keyi gönderir.
+        firebase.database().ref("chats/" + messageKey).set({
+            message: mesaj,
+            baglanti: email_id2,
+            createdDate: today + dt
+        });
+        //Otomatik olarak en alt kısma odakanılır
+        $("#mesaj").val(''); //Mesaj inputunu temizleyelim
+    } else {
+        swal({
+            icon: "warning",
+            text: "Boş Mesaj Gönderemezsiniz !",
+            buttons: "Tamam",
+        });
+    }
+}
+
+function chatYukle() {
+    var query = firebase.database().ref("chats");
+    var user2 = firebase.auth().currentUser;
+    var email_id22 = user2.email;
+    query.on('value', function(snapshot) {
+        $("#mesajAlani").html("");
+        snapshot.forEach(function(childSnapshot) {
+            var data = childSnapshot.val();
+
+            if (data.baglanti == email_id22) {
+                //Mesaj bizim tarafımızdan gönderilmişse bu alan çalışacak
+                var mesaj = `<div class="d-flex justify-content-end">
+               <div class="alert alert-info" role="alert">
+                   ` + data.message + ` 
+                     </div>
+                </div>`;
+                $("#mesajAlani").append(mesaj);
+            } else {
+                //Mesaj başkası tarafından gönderilmişse bu alan çalışacak
+                var mesaj = `<div class="d-flex">
+                                   <div class="alert alert-dark" role="alert">
+                                       <b>@` + data.baglanti.split('@')[0] + `: </b> ` + data.message + `
+                                 </div>
+                          </div>`;
+                $("#mesajAlani").append(mesaj);
+            }
+            $(".card-body").scrollTop($('.card-body')[0].scrollHeight - $('.card-body')[0].clientHeight);
+        });
+
+    });
+}
+
+document.getElementById('sifreyenile').onclick = function() {
+    var email_sifre = document.getElementById('sifreunuttum').value;
+if (email_sifre === "") {
+swal({
+    title: "Başarısız!",
+    text: "Kayıtlı Email Adresinizi Yazın",
+    icon: "warning",
+    buttons: "Tamam",
+});
+}else{
+firebase.auth().sendPasswordResetEmail(email_sifre)
+.then(()=>{
+swal({
+    title: "Başarılı",
+    text: "E-postanıza şifre yenileme bağlantısı gönderildi",
+    icon: "success",
+    buttons: "Tamam",
+});
+}).catch(function(error) {
+var errorCode = error.code;
+var errorMessage1 = error.message;
+    swal({
+    title: "Başarısız !",
+    text: "Böyle bir kullanıcı kimlik bulunamadı",
+    icon: "warning",
+    buttons: "Tamam",
+});
+});
+}
+}
  function sw() {
      swal("Gizlilik Sözleşmesi", "Gizlilik", "info", {
          buttons: false,
