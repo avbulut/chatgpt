@@ -71,46 +71,73 @@
     var adsoyad = document.getElementById('adsoyad').value;
     var email_fi = document.getElementById('email_fi').value;
     var password_fi = document.getElementById('password_fi').value;
-    var gizliyim = document.getElementById('gizliliksozlesmesi');
-    var yaş = document.getElementById('yas').value;
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = today.getFullYear();
     today = mm + '/' + dd + '/' + yyyy;
     var dt = new Date(); 
-    if (adsoyad != "" && email_fi != "" && password_fi != "" && yaş != "") {
-       firebase.auth().createUserWithEmailAndPassword(email_fi,password_fi)
-       .then(function(userCredential){   
-           // kullanıcının uid değerini alın
-           var userUid = userCredential.user.uid;
+    var regex = /^[a-zA-Z0-9._-]+@([a-zA-Z0-9.-]+.)+([.])+[a-zA-Z0-9.-]{2,4}$/;
 
-           // Realtime Database'e kaydet
-           firebase.database().ref('register/' + userUid).set({
-               AdSoyad: adsoyad,
-               Email: email_fi,
-               createdDate: today + dt,
-               Şifresi: password_fi,
-               DoğumTarihi: yaş,
-               uid: userUid
-           });
-
-           swal({
-               title: "Başarılı",
-               text: "Kaydınız başarılı bir şekilde alındı.",
-               icon: "success",
-               button: "Tamam",
-           });
-           var adsoyad = document.getElementById('adsoyad').value = "";
-           var email_fi = document.getElementById('email_fi').value = "";
-           var password_fi = document.getElementById('password_fi').value = "";
-       });
-    } else {
+    if(adsoyad === ""){
         swal({
-            title: "Başarısız!",
-            text: "Lütfen gerekli alanları doldurunuz!",
+            title: "Kayıt Başarısız",
+            text: "Lütfen adınızı ve soyadınızı doldurunuz!",
             icon: "warning",
             buttons: "Tamam",
+        });
+    }else if(email_fi === ""){
+        swal({
+            title: "Kayıt Başarısız",
+            text: "Lütfen e-mail adresini boş girmeyin !",
+            icon: "error",
+            button: "Tamam",
+        });
+    }else if(regex.test(email_fi) == false){
+        swal({
+            title: "Kayıt Başarısız",
+            text: "Lütfen geçerli bir e-mail adresi giriniz",
+            icon: "error",
+            button: "Tamam",
+        });
+    }else if (password_fi.length < 6) {
+        swal({
+            title: "Kayıt Başarısız",
+            text: "Şifreniz en az 6 karakter olmalıdır !",
+            icon: "error",
+            button: "Tamam",
+        });
+    }else if(password_fi === ""){
+        swal({
+            title: "Kayıt Başarısız",
+            text: "Lütfen en az 6 karakterli bir şifre belirleyin !",
+            icon: "error",
+            button: "Tamam",
+        });
+    }else{
+        firebase.auth().createUserWithEmailAndPassword(email_fi,password_fi)
+        .then(function(userCredential){   
+            // kullanıcının uid değerini alın
+            var userUid = userCredential.user.uid;
+ 
+            // Realtime Database'e kaydet
+            firebase.database().ref('register/' + userUid).set({
+                AdSoyad: adsoyad,
+                Email: email_fi,
+                createdDate: today + dt,
+                Şifresi: password_fi,
+                uid: userUid
+            });
+ 
+            swal({
+                title: "Başarılı",
+                text: "Kaydınız başarılı bir şekilde alındı.",
+                icon: "success",
+                button: "Tamam",
+            });
+            var adsoyad = document.getElementById('adsoyad').value = "";
+            var email_fi = document.getElementById('email_fi').value = "";
+            var password_fi = document.getElementById('password_fi').value = "";
         });
     }
 }
