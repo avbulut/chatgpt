@@ -1,0 +1,190 @@
+                <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" type="text/css" href="css/sourcesanspro-font.css">
+
+<!------ Include the above in your HEAD tag ---------->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ANONİM CHAT</title>
+    <link href="css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/login.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <link rel="icon" href="images/unnamed.png" type="image/x-icon" />
+    <!-- Shopier CSS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css">
+
+</head>
+<!--Coded With Love By Mutiullah Samim-->
+
+<body>
+    <div class="form-v8" id="kayıtol_div">
+        <div class="page-content">
+            <div class="form-v8-content">
+                <div class="form-right">
+                    <div class="tab">
+                        <div class="tab-inner" >
+                            <button class="tablinks" style="font-size:18px; width: 100%;" onclick="openCity(event, 'sign-up')" id="defaultOpen">Kayıt Ol</button>
+                        </div>
+                        <div class="tab-inner">
+                            <button class="tablinks" style="font-size:18px; width: 100%;" onclick="openCity(event, 'sign-in')">Giriş Yap</button>
+                        </div>
+                        <div class="tab-inner">
+                            <button class="tablinks" style="font-size:18px; width: 100%;" onclick="openCity(event, 'sifremyenile')">Şifre Yenile</button>
+                        </div>
+                    </div>
+
+                    <div class="tabcontent" id="sign-up">
+                        <div class="form-row form-detail">
+                            <label class="form-row-inner">
+								<input type="text" class="input-text" id="adsoyad" placeholder="Adınızı Soyadınızı Giriniz..." >
+							  				
+							</label>
+                        </div>
+                        <div class="form-row form-detail">
+                            <label class="form-row-inner">Doğum Tarih : 
+								<input type="date" class="input-text" id="yas" >
+															</label>
+                        </div>
+                        <div class="form-row form-detail">
+                            <label class="form-row-inner">
+								<input type="text" class="input-text" id="email_fi" placeholder="E-Mail Adresinizi Giriniz...">
+				            </label>
+                        </div>
+                        <div class="form-row form-detail">
+                            <label class="form-row-inner">
+								<input type="password" class="input-text" id="password_fi" placeholder="6 Haneli Şifre Belirleyiniz...">
+				            </label>
+                        </div>
+
+    
+
+
+
+
+                        <div class="form-row-inner form-detail">
+                            <input type="button" class="register" style="margin-bottom: 0%; text-align-last: center; padding:1% ;" onclick="gonder()" value="Kayıt Ol">
+
+                            <input type="button" class="register shopier" style="display: none; margin-bottom: 0%;  padding:1% ; background-color: brown; color: white;" id="5938001" value="Satın Al">
+                        </div>
+                    </div>
+
+
+
+                    <div class="tabcontent" id="sign-in">
+                        <div class="form-row">
+                            <label class="form-row-inner form-detail">
+								<input type="email"  class="input-text" id="email_field" onkeypress="if (event.keyCode == 13) { 
+            document.getElementById('login').click(); 
+            return false;}" placeholder="E-Mail Giriniz....">
+							
+							</label>
+                        </div>
+                        <div class="form-row">
+                            <label class="form-row-inner form-detail">
+								<input type="password"  class="input-text" id="password_field" onkeypress="if (event.keyCode == 13) { 
+            document.getElementById('login').click(); 
+            return false;}" placeholder="Şifrenizi Giriniz...">
+								
+							</label>
+                        </div>
+
+                        <div class="form-row-last form-detail">
+                            <input type="button" class="register" style=" padding:1% ;" id="login" value="Giriş Yap">
+                        </div>
+                    </div>
+
+                    <div class="tabcontent" id="sifremyenile">
+                        <div class="form-row">
+                            <label class="form-row-inner form-detail">
+								<input type="email"  class="input-text"  id="sifreunuttum"  onkeypress="if (event.keyCode == 13) { 
+            document.getElementById('sifreyenile').click(); 
+            return false;}" placeholder="Kayıtlı E-Mail Adresinizi Giriniz....">
+							
+							</label>
+                        </div>
+
+                        <div class="form-row-last form-detail">
+                            <input type="button" class="register" style=" padding:1% ;" id="sifreyenile" value="Şifremi yenile">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+
+
+ 
+
+    <div class="kutucuk" id="gizli2">
+        <p id="durum_mesaj"></p>
+        <!--   <input id="namebox" type="text" style="display: none;">
+        <img id="myimg" style="height: 200px; width: 200px;border: 2px solid black;"> <label id="upProgress"></label>
+        -->
+        <p id="reus"></p>
+    </div>
+    <!--FOOTER-->
+
+
+
+    <!-------------------------------------------------------------------------------------->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-storage.js"></script>
+    <script src="apikey.js"></script>
+    <script src="login.js"></script>
+
+    <script>
+        document.getElementById('sifreyenile').onclick = function() {
+            var email_sifre = document.getElementById('sifreunuttum').value;
+    if (email_sifre === "") {
+        swal({
+            title: "Başarısız!",
+            text: "Kayıtlı Email Adresinizi Yazın",
+            icon: "warning",
+            buttons: "Tamam",
+        });
+    }else{
+    firebase.auth().sendPasswordResetEmail(email_sifre)
+    .then(()=>{
+        swal({
+            title: "Başarılı",
+            text: "E-postanıza şifre yenileme bağlantısı gönderildi",
+            icon: "success",
+            buttons: "Tamam",
+        });
+      }).catch(function(error) {
+        var errorCode = error.code;
+        var errorMessage1 = error.message;
+            swal({
+            title: "Başarısız !",
+            text: "Böyle bir kullanıcı kimlik bulunamadı",
+            icon: "warning",
+            buttons: "Tamam",
+        });
+    });
+}
+        }
+    </script>
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.min.js"></script>
+    <script src="https://s3.eu-central-1.amazonaws.com/shopier/framework.js"></script>
+</body>
+
+</html>

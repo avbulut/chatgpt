@@ -23,128 +23,7 @@
 <!--Coded With Love By Mutiullah Samim-->
 
 <body>
-    <div class="form-v8" id="kayıtol_div">
-        <div class="page-content">
-            <div class="form-v8-content">
-                <div class="form-right">
-                    <div class="tab">
-                        <div class="tab-inner">
-                            <button class="tablinks" onclick="openCity(event, 'sign-up')" id="defaultOpen">Kayıt Ol</button>
-                        </div>
-                        <div class="tab-inner">
-                            <button class="tablinks" onclick="openCity(event, 'sign-in')">Giriş Yap</button>
-                        </div>
-                    </div>
 
-                    <div class="tabcontent" id="sign-up">
-                        <div class="form-row form-detail">
-                            <label class="form-row-inner">
-								<input type="text" class="input-text" id="adsoyad" placeholder="Adınızı Soyadınızı Giriniz..." >
-							  				
-							</label>
-                        </div>
-                        <div class="form-row form-detail">
-                            <label class="form-row-inner">Doğum Tarih : 
-								<input type="date" class="input-text" id="yas" >
-															</label>
-                        </div>
-                        <div class="form-row form-detail">
-                            <label class="form-row-inner">
-								<input type="text" class="input-text" id="email_fi" placeholder="E-Mail Adresinizi Giriniz...">
-				            </label>
-                        </div>
-                        <div class="form-row form-detail">
-                            <label class="form-row-inner">
-								<input type="password" class="input-text" id="password_fi" placeholder="6 Haneli Şifre Belirleyiniz...">
-				            </label>
-                        </div>
-
-    
-
-
-
-
-                        <div class="form-row-inner form-detail">
-                            <input type="button" class="register" style="margin-bottom: 0%; text-align-last: center; padding:1% ;" onclick="gonder()" value="Kayıt Ol">
-
-                            <input type="button" class="register shopier" style="display: none; margin-bottom: 0%;  padding:1% ; background-color: brown; color: white;" id="5938001" value="Satın Al">
-                        </div>
-                    </div>
-
-
-
-                    <div class="tabcontent" id="sign-in">
-                        <div class="form-row">
-                            <label class="form-row-inner form-detail">
-								<input type="email"  class="input-text" id="email_field" onkeypress="if (event.keyCode == 13) { 
-            document.getElementById('login').click(); 
-            return false;}" placeholder="E-Mail Giriniz....">
-							
-							</label>
-                        </div>
-                        <div class="form-row">
-                            <label class="form-row-inner form-detail">
-								<input type="password"  class="input-text" id="password_field" onkeypress="if (event.keyCode == 13) { 
-            document.getElementById('login').click(); 
-            return false;}" placeholder="Şifrenizi Giriniz...">
-								
-							</label>
-                        </div>
-
-                        <div class="form-row-last form-detail">
-                            <input type="button" class="register" style=" padding:1% ;" id="login" value="Giriş Yap">
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="form-v8" id="login_div">
-        <div class="page-content" style="height: 100%;">
-            <div class="form-v8-content">
-
-                <div class="form-right">
-                    <div class="tab">
-
-                        <div class="tab-inner">
-                            <button class="tablinks active">Anonim Chat Giriş Paneli</button>
-                        </div>
-                    </div>
-                    <div class="form-detail">
-                        <div>
-
-                            <div class="form-row">
-                                <label class="form-row-inner">
-                                                                       
-                                <label style="font-size:14px;"> <br style="margin-bottom: 20px;"></label>
-                                <br style="margin-bottom: 20px;">
-                                <canvas width="200" height="60" style="border: 2px solid grey; margin-left: 5px;" id="canvas"></canvas>
-                                <button style="background-color: transparent; border-color: transparent; color: red; font-weight: bold;" onclick="getCaptcha()"><p id="result">Kodu Al</p></button>
-
-
-
-                                <input type="text" id="typedText" class="input-text" onkeypress="if (event.keyCode == 13) { 
-            document.getElementById('uyeKaydet').click(); 
-            return false;}">
-                                <span class="label">Güvenlik İD (Tek Kullanımlık !)</span>
-                                <span class="border"></span>
-                                </label>
-                            </div>
-                            <div class="form-row-last">
-                                <button type="button" id="uyeKaydet" class="form-control" style="background-color: rgb(40, 40, 131); border-radius: 20px; color: white; border-color: transparent; font-weight: bold;">Anonim Hesap Ol</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-    <!------------------------------------------------------------------------------------------>
 
     <div id="anasayfa_div">
 
@@ -257,8 +136,25 @@
     <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-storage.js"></script>
-    <script src="./login.js"></script>
+    <script src="apikey.js"></script>
+    <script>
+        var user = firebase.auth().currentUser;
 
+        firebase.auth().onAuthStateChanged(function(user) {
+           if (user) {
+               if (user != null) {
+                   var email_id = user.email;
+                   document.getElementById('user_para').innerHTML = email_id;
+                   chatYukle();
+
+               }
+               ll()
+           } else {
+              window.location.href="register.html";
+           }
+       });
+    </script>
+    <script src="ozel.js"></script>
 
 
 
