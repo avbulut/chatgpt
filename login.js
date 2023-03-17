@@ -191,8 +191,9 @@
 
   document.getElementById('logout').onclick = function() {
     firebase.auth().signOut();
-    window.location.href = "register.html";
-}
+    document.getElementById("kayıtol_div").style.display ="block";
+    document.getElementById("anasayfa_div").style.display ="none"; 
+  }
 
 
 document.getElementById('mesajGonder').onclick = function() {
