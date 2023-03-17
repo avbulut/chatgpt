@@ -47,6 +47,8 @@
                  buttons: "Tamam",
              });
          });
+
+ }
          firebase.auth().onAuthStateChanged(function(user) {
             var user = firebase.auth().currentUser;
             document.getElementById("kayıtol_div").style.display ="none";
@@ -64,8 +66,6 @@
             document.getElementById("anasayfa_div").style.display ="none";           
         }
         });
- }
-
 
  /*------------------------------------------------------------------------------------------------------------*/
 
