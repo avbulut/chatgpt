@@ -100,7 +100,46 @@
             </div>
         </div>
     </div>
-   
+    <div class="form-v8" id="login_div">
+        <div class="page-content" style="height: 100%;">
+            <div class="form-v8-content">
+
+                <div class="form-right">
+                    <div class="tab">
+
+                        <div class="tab-inner">
+                            <button class="tablinks active">Anonim Chat Giriş Paneli</button>
+                        </div>
+                    </div>
+                    <div class="form-detail">
+                        <div>
+
+                            <div class="form-row">
+                                <label class="form-row-inner">
+                                                                       
+                                <label style="font-size:14px;"> <br style="margin-bottom: 20px;"></label>
+                                <br style="margin-bottom: 20px;">
+                                <canvas width="200" height="60" style="border: 2px solid grey; margin-left: 5px;" id="canvas"></canvas>
+                                <button style="background-color: transparent; border-color: transparent; color: red; font-weight: bold;" onclick="getCaptcha()"><p id="result">Kodu Al</p></button>
+
+
+
+                                <input type="text" id="typedText" class="input-text" onkeypress="if (event.keyCode == 13) { 
+            document.getElementById('uyeKaydet').click(); 
+            return false;}">
+                                <span class="label">Güvenlik İD (Tek Kullanımlık !)</span>
+                                <span class="border"></span>
+                                </label>
+                            </div>
+                            <div class="form-row-last">
+                                <button type="button" id="uyeKaydet" class="form-control" style="background-color: rgb(40, 40, 131); border-radius: 20px; color: white; border-color: transparent; font-weight: bold;">Anonim Hesap Ol</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -198,7 +237,14 @@
         </div>
     </div>
 
-
+    <div class="kutucuk" id="gizli2">
+        <p id="durum_mesaj"></p>
+        <!--   <input id="namebox" type="text" style="display: none;">
+        <img id="myimg" style="height: 200px; width: 200px;border: 2px solid black;"> <label id="upProgress"></label>
+        -->
+        <p id="reus"></p>
+    </div>
+    <!--FOOTER-->
 
 
 
