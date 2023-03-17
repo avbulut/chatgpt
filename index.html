@@ -18,14 +18,116 @@
     <!-- Shopier CSS -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css">
-
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-storage.js"></script>
+    <script src="./apikey.js"></script>
 
 </head>
 <!--Coded With Love By Mutiullah Samim-->
 
 <body>
 
+    <div class="form-v8" id="kayıtol_div">
+        <div class="page-content">
+            <div class="form-v8-content">
+                <div class="form-right">
+                    <div class="tab">
+                        <div class="tab-inner" >
+                            <button class="tablinks" style="font-size:18px; width: 100%;" onclick="openCity(event, 'sign-up')" id="defaultOpen">Kayıt Ol</button>
+                        </div>
+                        <div class="tab-inner">
+                            <button class="tablinks" style="font-size:18px; width: 100%;" onclick="openCity(event, 'sign-in')">Giriş Yap</button>
+                        </div>
+                        <div class="tab-inner">
+                            <button class="tablinks" style="font-size:18px; width: 100%;" onclick="openCity(event, 'sifremyenile')">Şifre Yenile</button>
+                        </div>
+                    </div>
 
+                    <div class="tabcontent" id="sign-up">
+                        <div class="form-row form-detail">
+                            <label class="form-row-inner">
+								<input type="text" class="input-text" id="adsoyad" placeholder="Adınızı Soyadınızı Giriniz..." >
+							  				
+							</label>
+                        </div>
+                        <div class="form-row form-detail">
+                            <label class="form-row-inner">Doğum Tarih : 
+								<input type="date" class="input-text" id="yas" >
+															</label>
+                        </div>
+                        <div class="form-row form-detail">
+                            <label class="form-row-inner">
+								<input type="text" class="input-text" id="email_fi" placeholder="E-Mail Adresinizi Giriniz...">
+				            </label>
+                        </div>
+                        <div class="form-row form-detail">
+                            <label class="form-row-inner">
+								<input type="password" class="input-text" id="password_fi" placeholder="6 Haneli Şifre Belirleyiniz...">
+				            </label>
+                        </div>
+
+    
+
+
+
+
+                        <div class="form-row-inner form-detail">
+                            <input type="button" class="register" style="margin-bottom: 0%; text-align-last: center; padding:1% ;" onclick="gonder()" value="Kayıt Ol">
+
+                            <input type="button" class="register shopier" style="display: none; margin-bottom: 0%;  padding:1% ; background-color: brown; color: white;" id="5938001" value="Satın Al">
+                        </div>
+                    </div>
+
+
+
+                    <div class="tabcontent" id="sign-in">
+                        <div class="form-row">
+                            <label class="form-row-inner form-detail">
+								<input type="email"  class="input-text" id="email_field" onkeypress="if (event.keyCode == 13) { 
+            document.getElementById('login').click(); 
+            return false;}" placeholder="E-Mail Giriniz....">
+							
+							</label>
+                        </div>
+                        <div class="form-row">
+                            <label class="form-row-inner form-detail">
+								<input type="password"  class="input-text" id="password_field" onkeypress="if (event.keyCode == 13) { 
+            document.getElementById('login').click(); 
+            return false;}" placeholder="Şifrenizi Giriniz...">
+								
+							</label>
+                        </div>
+
+                        <div class="form-row-last form-detail">
+                            <input type="button" class="register" style=" padding:1% ;" id="login" value="Giriş Yap">
+                        </div>
+                    </div>
+
+                    <div class="tabcontent" id="sifremyenile">
+                        <div class="form-row">
+                            <label class="form-row-inner form-detail">
+								<input type="email"  class="input-text"  id="sifreunuttum"  onkeypress="if (event.keyCode == 13) { 
+            document.getElementById('sifreyenile').click(); 
+            return false;}" placeholder="Kayıtlı E-Mail Adresinizi Giriniz....">
+							
+							</label>
+                        </div>
+
+                        <div class="form-row-last form-detail">
+                            <input type="button" class="register" style=" padding:1% ;" id="sifreyenile" value="Şifremi yenile">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+
+
+ 
     <div id="anasayfa_div">
 
         <div class="container-fluid h-100" style="height: 1%;">
@@ -131,30 +233,12 @@
     <!-------------------------------------------------------------------------------------->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.0.0/firebase.js"></script>
-    <script src="./apikey.js"></script>
-    <script>
+    <script src="./login.js"></script>
 
-        firebase.auth().onAuthStateChanged(function(user) {
-            var user = firebase.auth().currentUser;
-
-           if (user) {
-               if (user != null) {
-                   var email_id = user.email;
-                   document.getElementById('user_para').innerHTML = email_id;
-                   chatYukle();
-
-               }
-               ll()
-           } else {
-              window.location.href="register.html";
-           }
-       });
-    </script>
-    <script src="./ozel.js"></script>
 
 
 
