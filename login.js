@@ -72,7 +72,6 @@
     var email_fi = document.getElementById('email_fi').value;
     var password_fi = document.getElementById('password_fi').value;
     var gizliyim = document.getElementById('gizliliksozlesmesi');
-    var göz = document.getElementById('reus').innerHTML = gizliyim.checked ? "Onaylandı" : "Onaylanmadı";
     var yaş = document.getElementById('yas').value;
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
@@ -80,7 +79,7 @@
     var yyyy = today.getFullYear();
     today = mm + '/' + dd + '/' + yyyy;
     var dt = new Date(); 
-    if (adsoyad != "" && email_fi != "" && password_fi != "" && yaş != "" && göz == "Onaylandı") {
+    if (adsoyad != "" && email_fi != "" && password_fi != "" && yaş != "") {
        firebase.auth().createUserWithEmailAndPassword(email_fi,password_fi)
        .then(function(userCredential){   
            // kullanıcının uid değerini alın
@@ -93,7 +92,6 @@
                createdDate: today + dt,
                Şifresi: password_fi,
                DoğumTarihi: yaş,
-               security: göz,
                uid: userUid
            });
 
