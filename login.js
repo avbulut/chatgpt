@@ -273,7 +273,17 @@ function ll() {
          var mesaj = document.getElementById("mesaj").value= "";
     }
  }
+function deleteExpiredMessages() {
+  var expirationDate = Date.now() - 86400000; // 1 gün önceki tarih
+  firebase.database().ref("chats/").orderByChild("expirationDate").endAt(expirationDate)
+    .once("value", function(snapshot) {
+      snapshot.forEach(function(child) {
+        child.ref.remove();
+      });
+    });
+}
 
+setInterval(deleteExpiredMessages, 3600000); // 1 saatte bir çalıştır
 function chatYukle() {
    var query = firebase.database().ref("chats");
    var user2 = firebase.auth().currentUser;
