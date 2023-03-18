@@ -28,7 +28,7 @@
 </head>
 <!--Coded With Love By Mutiullah Samim-->
 
-<body style="margin-top:3%;">
+<body >
 
     <div class="form-v8" id="kayıtol_div" >
         <div class="page-content">
@@ -49,36 +49,47 @@
                     <div class="tabcontent" id="sign-up">
                         <div class="form-row form-detail">
                             <label class="form-row-inner">
-								<input type="text" class="input-text" id="adsoyad" placeholder="Adınızı Soyadınızı Giriniz..." >
+								<input type="text" class="input-text" id="adsoyad" placeholder="Adınızı Soyadınızı Giriniz..." onkeypress="if (event.keyCode == 13) { 
+                                    document.getElementById('gonder').click(); 
+                                    return false;}" >
 							  				
 							</label>
                         </div>
                         <div class="form-row form-detail">
                             <label class="form-row-inner">Doğum Tarih : 
-								<input type="date" class="input-text" id="yas" >
+								<input type="date" class="input-text" id="yas" onkeypress="if (event.keyCode == 13) { 
+                                    document.getElementById('gonder').click(); 
+                                    return false;}">
 															</label>
                         </div>
                         <div class="form-row form-detail">
                             <label class="form-row-inner">
-								<input type="text" class="input-text" id="email_fi" placeholder="E-Mail Adresinizi Giriniz...">
+								<input type="text" class="input-text" id="email_fi" placeholder="E-Mail Adresinizi Giriniz..." onkeypress="if (event.keyCode == 13) { 
+                                    document.getElementById('gonder').click(); 
+                                    return false;}">
 				            </label>
                         </div>
                         <div class="form-row form-detail">
                             <label class="form-row-inner">
-								<input type="password" class="input-text" id="password_fi" placeholder="6 Haneli Şifre Belirleyiniz...">
+								<input type="password" class="input-text" id="password_fi" placeholder="6 Haneli Şifre Belirleyiniz..." onkeypress="if (event.keyCode == 13) { 
+                                    document.getElementById('gonder').click(); 
+                                    return false;}">
 				            </label>
                         </div>
 
     
-
+                        <div class="form-row-inner " style="margin-left:6%; margin-bottom: 2%;">
+                            <input type="checkbox" id="gizliliksozlesmesi" onkeypress="if (event.keyCode == 13) { 
+                document.getElementById('gonder').click(); 
+                return false;}">
+                                <a href="#" style="color: white;" onclick="sw()">Gizlilik Sözleşmesi</a>
+                                <span class="border"></span>
+                            </div>
 
 
 
                         <div class="form-row-inner form-detail">
-                            <input type="button" class="register" style="margin-bottom: 0%; text-align-last: center; padding:1% ;" onclick="gonder()" value="Kayıt Ol">
-
-                            <input type="button" class="register shopier" style="display: none; margin-bottom: 0%;  padding:1% ; background-color: brown; color: white;" id="5938001" value="Satın Al">
-                        </div>
+                            <input type="button" class="register" style="margin-bottom: 0%; text-align-last: center; padding:1% ;" onclick="gonder()" value="Kayıt Ol">                        </div>
                     </div>
 
 
@@ -114,7 +125,6 @@
 							
 							</label>
                         </div>
-
                         <div class="form-row-last form-detail">
                             <input type="button" class="register" style=" padding:1% ;" id="sifreyenile" value="Şifremi yenile">
                         </div>
@@ -127,7 +137,7 @@
 
 
  
-    <div id="anasayfa_div" style="display:none;">
+    <div id="anasayfa_div" style="display:none; margin-top:3%;">
 
         <div class="container-fluid h-100" style="height: 1%;">
             <div class="row justify-content-center" style="margin-top: 1%;">
