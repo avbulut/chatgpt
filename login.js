@@ -226,7 +226,7 @@ function ll() {
  
     var urlRegex = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
  
-    var swearWords = ["orospu", "orospu çocuğu", "amcık", "sikerim","ananın amı","amınagorum","amına goyarım","amına koyarım","amk","sik","amcuk","siktir","siktir lan","siktirlan","piç","ananın amına koyarım","oç","şerefsiz","sikerim belanı","kahpe","gavat","sikiş","sikis","yavşak","pezevenk","am","penis","vajina","sex","seks","onun bunun çocuğu","sikerim","sikerim böyle gurubu","anan","tecavüz","taciz","dildo","takma yarak","yarak","yarrak","seni sikerim"];
+    var swearWords = ["orospu", "orospu çocuğu", "amcık", "sikerim","amınagorum","amına goyarım","amına koyarım","amk","sik","amcuk","siktir","siktir lan","siktirlan","piç","oç","şerefsiz","sikerim belanı","kahpe","gavat","sikiş","sikis","yavşak","pezevenk","penis","vajina","sex","seks","onun bunun çocuğu","sikerim","sikerim böyle gurubu","tecavüz","taciz","dildo","takma yarak","yarak","yarrak","seni sikerim"];
     for (var i = 0; i < swearWords.length; i++) {
         if (mesaj.toLowerCase().indexOf(swearWords[i].toLowerCase()) !== -1) {
             swal({
