@@ -338,15 +338,17 @@ var errorMessage1 = error.message;
 function sw() {
     swal("Gizlilik Sözleşmesi", `Bu anonim chat uygulamasını kullanarak, aşağıdaki koşulları kabul etmiş sayılırsınız:
     Bu uygulama üzerinde yazılan mesajlardan sadece siz sorumlusunuz. Kubilay Alpaslan, bu uygulama üzerinde yazılan hakaret veya yanlış beyanlardan sorumlu değildir.
-    
+
     Bu uygulama kullanıcıları, diğer kullanıcıların haklarını ihlal etmekten kaçınmalıdır. Kullanıcılar, bu uygulamayı kullanarak başka kullanıcılara zarar vermekten kaçınmalıdır.
-    
+
     Kubilay Alpaslan, bu uygulamanın kullanımından doğabilecek herhangi bir kayıp veya zarar için sorumlu tutulamaz.
-        
+
     Bu uygulama, gizlilik sözleşmesinde değişiklik yapma hakkını saklı tutar. Değişiklikler yapıldığında, kullanıcılar için geçerli hale gelir.
-    
+
     Bu gizlilik sözleşmesinde yer alan tüm koşulları okudum ve kabul ediyorum.`, "info", {
-        buttons: false,
+        buttons: {
+            confirm: "Tamam",
+        },
     });
 }
 
