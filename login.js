@@ -267,7 +267,8 @@ function ll() {
          firebase.database().ref("chats/" + messageKey).set({
              message: mesaj,
              baglanti: email_id2,
-             createdDate: today + dt
+             createdDate: today,
+             datel: dt
          });
          //Otomatik olarak en alt kısma odakanılır
          var mesaj = document.getElementById("mesaj").value= "";
