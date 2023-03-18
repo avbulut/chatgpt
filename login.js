@@ -252,42 +252,68 @@ function ll() {
           buttons: "Tamam",
       });
     } else {
-         var today = new Date();
-         var dd = String(today.getDate()).padStart(2, '0');
-         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-         var yyyy = today.getFullYear();
-         today = mm + '/' + dd + '/' + yyyy;
-         var dt = new Date(); // DATE() ile yeni bir tarih nesnesi oluşturuldu.
-         var saat = dt.getHours();
-         var dakika = dt.getMinutes();
-         var user2 = firebase.auth().currentUser;
-         var email_id2 = user2.email;
-         var saniye = dt.getSeconds();
-         var messageKey = firebase.database().ref("chats/").push().key; //Rastgele bir mesaj keyi gönderir.
-         firebase.database().ref("chats/" + messageKey).set({
-             message: mesaj,
-             baglanti: email_id2,
-             createdDate: today,
-             datel: dt
-         });
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        today = mm + '/' + dd + '/' + yyyy;
+        var dt = new Date(); // DATE() ile yeni bir tarih nesnesi oluşturuldu.
+        var saat = dt.getHours();
+        var dakika = dt.getMinutes();
+        var user2 = firebase.auth().currentUser;
+        var email_id2 = user2.email;
+        var saniye = dt.getSeconds();
+        var messageKey = firebase.database().ref("chats/").push().key; //Rastgele bir mesaj keyi gönderir.
+        var createdDate = today;
+        var datel = dt;
+        
+        firebase.database().ref("chats/" + messageKey).set({
+          message: mesaj,
+          baglanti: email_id2,
+          createdDate: createdDate,
+          datel: datel
+        });
+        
+      
          //Otomatik olarak en alt kısma odakanılır
          var mesaj = document.getElementById("mesaj").value= "";
     }
  }
  function deleteExpiredMessages() {
-     var expirationDate = Date.now() - 86400000; // 1 gün önceki tarih
-      firebase.database().ref("chats/")
-        .orderByChild("createdDate")
-        .endAt(expirationDate)
-        .once("value", function(snapshot) {
-          snapshot.forEach(function(childSnapshot) {
-            var childKey = childSnapshot.key;
-            firebase.database().ref("chats/" + childKey).remove();
-          });
-        });
+    // Listen for changes to the "chats" node
+    firebase.database().ref("chats").once("value", function(snapshot) {
+      // Iterate over the child snapshots to retrieve the data for each chat
+      snapshot.forEach(function(childSnapshot) {
+        var chatData = childSnapshot.val();
+        var chatKey = childSnapshot.key;
+        var chatCreatedDate = chatData.createdDate;
+    
+        // Check if the chat is older than one day
+        var oneDayAgo = new Date();
+        oneDayAgo.setDate(oneDayAgo.getDate() - 1);
+        var oneDayAgoString = `${oneDayAgo.getMonth() + 1}/${oneDayAgo.getDate()}/${oneDayAgo.getFullYear()}`;
+        if (chatCreatedDate < oneDayAgoString) {
+          // Delete the chat data
+          firebase.database().ref("chats/" + chatKey).remove();
+        }
+      });
+    });
+    
+    // Schedule the next execution at midnight
+    var now = new Date();
+    var millisUntilMidnight = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() + 1, // next day
+      0, // midnight
+      0, // zero minutes
+      0 // zero seconds
+    ) - now;
+    setTimeout(deleteExpiredMessages, millisUntilMidnight);
   }
-
-setInterval(deleteExpiredMessages, 3600000); // 1 saatte bir çalıştır
+  
+  // Start the function
+  deleteExpiredMessages();
 function chatYukle() {
    var query = firebase.database().ref("chats");
    var user2 = firebase.auth().currentUser;
