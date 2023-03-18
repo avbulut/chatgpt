@@ -73,6 +73,10 @@ function gonder() {
    var adsoyad = document.getElementById('adsoyad').value;
    var email_fi = document.getElementById('email_fi').value;
    var password_fi = document.getElementById('password_fi').value;
+   var gizlilikSozlesmesiChecked = document.getElementById("gizliliksozlesmesi").checked;
+   var yasInput = document.getElementById("yas");
+   var yas = new Date(yasInput.value);
+   var yilFarki = new Date(Date.now() - yas.getTime()).getFullYear() - 1970;
    var today = new Date();
    var dd = String(today.getDate()).padStart(2, '0');
    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -88,6 +92,20 @@ function gonder() {
            icon: "warning",
            buttons: "Tamam",
        });
+   }else if (isNaN(yas.getTime())) {
+    swal({
+        title: "Kayıt Başarısız",
+        text: "Lütfen doğum tarihini giriniz !",
+        icon: "error",
+        buttons: "Tamam",
+    });
+   }else if (yilFarki < 18) {
+    swal({
+        title: "Kayıt Başarısız",
+        text: "Yaşınız 18'den küçük olduğu için kaydolamazsınız !",
+        icon: "error",
+        buttons: "Tamam",
+    });
    }else if(email_fi === ""){
        swal({
            title: "Kayıt Başarısız",
@@ -116,6 +134,13 @@ function gonder() {
            icon: "error",
            button: "Tamam",
        });
+   }else  if (!gizlilikSozlesmesiChecked) {      
+    swal({
+        title: "Kayıt Başarısız",
+        text: "Lütfen gizlilik sözleşmesini kabul edin. Kabul etmeden önce gizlilik sözleşmesini okuyun !",
+        icon: "error",
+        buttons: "Tamam",
+    });
    }else{
        firebase.auth().createUserWithEmailAndPassword(email_fi,password_fi)
        .then(function(userCredential){   
@@ -137,7 +162,7 @@ function gonder() {
            swal({
                title: "Başarısız",
                text: "Zaten girdiğiniz kayıt veri tabanında bulunmaktadır.",
-               icon: "success",
+               icon: "warning",
                button: "Tamam",
            });
          });
@@ -203,13 +228,13 @@ function ll() {
  
     var swearWords = ["orospu", "orospu çocuğu", "amcık", "sikerim","ananın amı","amınagorum","amına goyarım","amına koyarım","amk","sik","amcuk","siktir","siktir lan","siktirlan","piç","ananın amına koyarım","oç","şerefsiz","sikerim belanı","kahpe","gavat","sikiş","sikis","yavşak","pezevenk","am","penis","vajina","sex","seks","onun bunun çocuğu","sikerim","sikerim böyle gurubu","anan","tecavüz","taciz","dildo","takma yarak","yarak","yarrak","seni sikerim"];
     for (var i = 0; i < swearWords.length; i++) {
-        if (mesaj.indexOf(swearWords[i]) !== -1) {
-         swal({
-             icon: "warning",
-             text: "Lütfen küfür göndermeyin !",
-             buttons: "Tamam",
-         });           
-         return;
+        if (mesaj.toLowerCase().indexOf(swearWords[i].toLowerCase()) !== -1) {
+            swal({
+                icon: "warning",
+                text: "Lütfen küfür göndermeyin !",
+                buttons: "Tamam",
+            });           
+            return;
         }
     }
  
@@ -311,7 +336,16 @@ var errorMessage1 = error.message;
 }
 }
 function sw() {
-    swal("Gizlilik Sözleşmesi", "Gizlilik", "info", {
+    swal("Gizlilik Sözleşmesi", `Bu anonim chat uygulamasını kullanarak, aşağıdaki koşulları kabul etmiş sayılırsınız:
+    Bu uygulama üzerinde yazılan mesajlardan sadece siz sorumlusunuz. Kubilay Alpaslan, bu uygulama üzerinde yazılan hakaret veya yanlış beyanlardan sorumlu değildir.
+    
+    Bu uygulama kullanıcıları, diğer kullanıcıların haklarını ihlal etmekten kaçınmalıdır. Kullanıcılar, bu uygulamayı kullanarak başka kullanıcılara zarar vermekten kaçınmalıdır.
+    
+    Kubilay Alpaslan, bu uygulamanın kullanımından doğabilecek herhangi bir kayıp veya zarar için sorumlu tutulamaz.
+        
+    Bu uygulama, gizlilik sözleşmesinde değişiklik yapma hakkını saklı tutar. Değişiklikler yapıldığında, kullanıcılar için geçerli hale gelir.
+    
+    Bu gizlilik sözleşmesinde yer alan tüm koşulları okudum ve kabul ediyorum.`, "info", {
         buttons: false,
     });
 }
