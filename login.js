@@ -194,7 +194,8 @@ function ll() {
      var email_id = user.email;
  
      firebase.database().ref("users/" + uid).set({
-       createdDate: today + dtü,
+       createdDate: today,
+       datel: dtü,
        userkayıt: email_id,
        kulid: uid,
        ip: ipAddress,
