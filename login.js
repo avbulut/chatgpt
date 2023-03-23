@@ -335,7 +335,7 @@ function chatYukle() {
                //Mesaj başkası tarafından gönderilmişse bu alan çalışacak
                var mesaj = `<div class="d-flex">
                                   <div class="alert alert-dark" role="alert">
-                                      <b>@` '+ data.baglanti.split('@')[0] +`: </b> ` + data.message + `
+                                      <b>@`+ data.baglanti.split('@')[0] +`: </b> ` + data.message + `
                                 </div>
                          </div>`;
                $("#mesajAlani").append(mesaj);
