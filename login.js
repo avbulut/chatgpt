@@ -279,41 +279,7 @@ function ll() {
          var mesaj = document.getElementById("mesaj").value= "";
     }
  }
- function deleteExpiredMessages() {
-    // Listen for changes to the "chats" node
-    firebase.database().ref("chats").once("value", function(snapshot) {
-      // Iterate over the child snapshots to retrieve the data for each chat
-      snapshot.forEach(function(childSnapshot) {
-        var chatData = childSnapshot.val();
-        var chatKey = childSnapshot.key;
-        var chatCreatedDate = chatData.createdDate;
-    
-        // Check if the chat is older than one day
-        var oneDayAgo = new Date();
-        oneDayAgo.setDate(oneDayAgo.getDate() - 1);
-        var oneDayAgoString = `${oneDayAgo.getMonth() + 1}/${oneDayAgo.getDate()}/${oneDayAgo.getFullYear()}`;
-        if (chatCreatedDate < oneDayAgoString) {
-          // Delete the chat data
-          firebase.database().ref("chats/" + chatKey).remove();
-        }
-      });
-    });
-    
-    // Schedule the next execution at midnight
-    var now = new Date();
-    var millisUntilMidnight = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate() + 1, // next day
-      0, // midnight
-      0, // zero minutes
-      0 // zero seconds
-    ) - now;
-    setTimeout(deleteExpiredMessages, millisUntilMidnight);
-  }
-  
-  // Start the function
-  deleteExpiredMessages();
+
 function chatYukle() {
    var query = firebase.database().ref("chats");
    var user2 = firebase.auth().currentUser;
