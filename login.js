@@ -31,6 +31,46 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 
+
+
+/*------------------------------------------------------------------------------------------------------------*/
+document.getElementById('login').onclick = function() {
+    var userEmail = document.getElementById('email_field').value;
+    var userPass = document.getElementById('password_field').value;
+    firebase.auth().signInWithEmailAndPassword(userEmail, userPass)
+        .then(() => {
+           document.getElementById("kayıtol_div").style.display ="none";
+           document.getElementById("anasayfa_div").style.display ="block";
+       }).catch(function(error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            swal({
+                title: "Başarısız!",
+                text: "Böyle bir kimlik numarası veya kullanıcı adı bulunmaktadır.",
+                icon: "warning",
+                buttons: "Tamam",
+            });
+        });
+
+}
+        firebase.auth().onAuthStateChanged(function(user) {
+           var user = firebase.auth().currentUser;
+           document.getElementById("kayıtol_div").style.display ="none";
+           document.getElementById("anasayfa_div").style.display ="block";
+
+          if (user) {
+              if (user != null) {
+                  var email_id = user.email;
+                  document.getElementById('user_para').innerHTML = email_id;
+                  chatYukle();
+       
+              }
+          } else {
+           document.getElementById("kayıtol_div").style.display ="block";
+           document.getElementById("anasayfa_div").style.display ="none";           
+       }
+       });
+
 // create a reference to your Firebase Realtime Database
 const dbRef = firebase.database().ref('chats');
 
@@ -78,46 +118,6 @@ dbRef.on('child_added', snapshot => {
     granted ? showNotification() : showError();
   }
 });
-
-
-/*------------------------------------------------------------------------------------------------------------*/
-document.getElementById('login').onclick = function() {
-    var userEmail = document.getElementById('email_field').value;
-    var userPass = document.getElementById('password_field').value;
-    firebase.auth().signInWithEmailAndPassword(userEmail, userPass)
-        .then(() => {
-           document.getElementById("kayıtol_div").style.display ="none";
-           document.getElementById("anasayfa_div").style.display ="block";
-       }).catch(function(error) {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            swal({
-                title: "Başarısız!",
-                text: "Böyle bir kimlik numarası veya kullanıcı adı bulunmaktadır.",
-                icon: "warning",
-                buttons: "Tamam",
-            });
-        });
-
-}
-        firebase.auth().onAuthStateChanged(function(user) {
-           var user = firebase.auth().currentUser;
-           document.getElementById("kayıtol_div").style.display ="none";
-           document.getElementById("anasayfa_div").style.display ="block";
-
-          if (user) {
-              if (user != null) {
-                  var email_id = user.email;
-                  document.getElementById('user_para').innerHTML = email_id;
-                  chatYukle();
-       
-              }
-          } else {
-           document.getElementById("kayıtol_div").style.display ="block";
-           document.getElementById("anasayfa_div").style.display ="none";           
-       }
-       });
-
 /*------------------------------------------------------------------------------------------------------------*/
 
 function gonder() {
