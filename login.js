@@ -71,53 +71,6 @@ document.getElementById('login').onclick = function() {
        }
        });
 
-// create a reference to your Firebase Realtime Database
-const dbRef = firebase.database().ref('chats');
-
-// listen for new messages
-dbRef.on('child_added', snapshot => {
-  const message = snapshot.val();
-  const currentDate = new Date().getTime();
-  
-  // compare the message date with the current date
-  if (message.date > currentDate) {
-    // create and show the notification
-    const showNotification = () => {
-      const notification = new Notification('Yeni Mesaj Var', {
-        body: message.content,
-        icon: './notification-icon.png'
-      });
-  
-      setTimeout(() => {
-        notification.close();
-      }, 10 * 1000);
-  
-      notification.addEventListener('click', () => {
-        window.open('https://example.com/messages', '_blank');
-      });
-    };
-  
-    // show an error message
-    const showError = () => {
-      const error = document.querySelector('.error');
-      error.style.display = 'block';
-      error.textContent = 'Bildirimler engellendi';
-    };
-  
-    // check notification permission
-    let granted = false;
-  
-    if (Notification.permission === 'granted') {
-      granted = true;
-    } else if (Notification.permission !== 'denied') {
-      let permission = await Notification.requestPermission();
-      granted = permission === 'granted' ? true : false;
-    }
-  
-    // show notification or error
-    granted ? showNotification() : showError();
-  }
-});
 /*------------------------------------------------------------------------------------------------------------*/
 
 function gonder() {
