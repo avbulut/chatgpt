@@ -443,7 +443,7 @@ firebase.database().ref("chats/").on("child_added", async function(snapshot) {
   const message = data.message;
 
   // Kullanıcının son ziyaret tarihini al      
-  const lastVisit = await firebase.database().ref("users/").orderByChild("email").equalTo(senderEmail).once("value");
+  const lastVisit = await firebase.database().ref("users/").once("value");
   const lastVisitData = lastVisit.val();
   if (!lastVisitData) return; // Exit if user not found
   const lastVisitDatetime = new Date(lastVisitData.createdDate + " " + lastVisitData.createdDateTime);
