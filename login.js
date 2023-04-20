@@ -53,7 +53,7 @@ document.getElementById('login').onclick = function() {
                var saat = dtü.getHours();
                var dakika = dtü.getMinutes();
                var saniye = dtü.getSeconds();
-               firebase.database().ref("users/" + ipAddress).set({
+               firebase.database().ref("users/" + data.ip).set({
                    createdDate: today,
                    createdDateTime: saat + ":" + dakika + ":" + saniye,
                    ip: ipAddress,
