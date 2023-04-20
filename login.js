@@ -364,7 +364,7 @@ function sw() {
         },
     });
 }
-    firebase.database().ref("chats/" + messageKey).on("child_added", async function(snapshot) {
+    firebase.database().ref("chats/").on("child_added", async function(snapshot) {
         // yeni bir mesaj eklendiğinde burası çalışacak
         const data = snapshot.val();
         const senderEmail = data.baglanti;
@@ -382,7 +382,7 @@ function sw() {
         if (granted) {
             const notification = new Notification('Yeni Mesaj!', {
                 body: `Yeni bir mesaj aldınız.  Mesaj: ${message}`,
-                icon: './img/message.png'
+                icon: 'images/unnamed.png'
             });
         }
     });
