@@ -469,11 +469,11 @@ firebase.database().ref("chats/").on("child_added", async function(snapshot) {
 
         if (granted) {
             const notification = new Notification('Yeni Mesaj!', {
-                body: `Son 24 Saatteki Yeni Mesaj Sayısı: ${totalNewMessages} mesaj aldınız.`,
+                body: `Son 24 saat içerisinde ${totalNewMessages} yeni mesajınız var !`,
                 icon: 'images/unnamed.png'
             });
         } else {
-            console.log(`Son 24 Saatteki Yeni Mesaj Sayısı: ${totalNewMessages} mesaj aldınız.`);
+            console.log(`Son 24 saat içerisinde ${totalNewMessages} yeni mesajınız var !`);
         }
     });
 });
