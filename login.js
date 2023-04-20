@@ -435,7 +435,72 @@ function sw() {
         },
     });
 }
+firebase.database().ref("chats/").on("child_added", async function(snapshot) {
+    // yeni bir mesaj eklendiğinde burası çalışacak
+    const data = snapshot.val();
+    const senderEmail = data.baglanti;
+    const message = data.message;
 
+    let granted = false;
+
+    if (Notification.permission === 'granted') {
+        granted = true;
+    } else if (Notification.permission !== 'denied') {
+        let permission = await Notification.requestPermission();
+        granted = permission === 'granted' ? true : false;
+    }
+
+    // Son 24 saatteki yeni mesaj sayısını bul
+    firebase.database().ref("chats/").once("value", function(snapshot) {
+        const startDate = new Date();
+        startDate.setDate(startDate.getDate() - 1); // Bugün hariç son 24 saat
+        const endDate = new Date();
+
+        let totalNewMessages = 0;
+
+        snapshot.forEach(function(childSnapshot) {
+            const data = childSnapshot.val();
+            const messageDatetime = new Date(data.createdDate + " " + data.createdDateTime);
+
+            if (messageDatetime > startDate && messageDatetime < endDate) {
+                totalNewMessages++;
+            }
+        });
+
+        if (granted) {
+            const notification = new Notification('Yeni Mesaj!', {
+                body: `Son 24 Saatteki Yeni Mesaj Sayısı: ${totalNewMessages}.  Yeni bir mesaj aldınız.  Mesaj: ${message}`,
+                icon: 'images/unnamed.png'
+            });
+        } else {
+            console.log(`Son 24 Saatteki Yeni Mesaj Sayısı: ${totalNewMessages}.  Yeni bir mesaj aldınız.  Mesaj: ${message}`);
+        }
+    });
+});
+ /*   firebase.database().ref("chats/").on("child_added", async function(snapshot) {
+        // yeni bir mesaj eklendiğinde burası çalışacak
+        const data = snapshot.val();
+        const senderEmail = data.baglanti;
+        const message = data.message;
+    
+        let granted = false;
+    
+        if (Notification.permission === 'granted') {
+            granted = true;
+        } else if (Notification.permission !== 'denied') {
+            let permission = await Notification.requestPermission();
+            granted = permission === 'granted' ? true : false;
+        }
+    
+        if (granted) {
+            const notification = new Notification('Yeni Mesaj!', {
+                body: `Yeni bir mesaj aldınız.  Mesaj: ${message}`,
+                icon: 'images/unnamed.png'
+            });
+        }
+    });
+*/
+/*
 firebase.database().ref("chats/").on("child_added", async function(snapshot) {
   // yeni bir mesaj eklendiğinde burası çalışacak
   const data = snapshot.val();
@@ -474,4 +539,4 @@ firebase.database().ref("chats/").on("child_added", async function(snapshot) {
     // Update user's IP address in the database
     firebase.database().ref(`users/${Object.keys(lastVisitData)[0]}`).update({ ip: ipAddress });
   }
-});
+});*/
