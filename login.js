@@ -406,25 +406,36 @@ function sw() {
     });
 }
 
-    firebase.database().ref("chats/").on("child_added", async function(snapshot) {
-        // yeni bir mesaj eklendiğinde burası çalışacak
-        const data = snapshot.val();
-        const senderEmail = data.baglanti;
-        const message = data.message;
-    
-        let granted = false;
-    
-        if (Notification.permission === 'granted') {
-            granted = true;
-        } else if (Notification.permission !== 'denied') {
-            let permission = await Notification.requestPermission();
-            granted = permission === 'granted' ? true : false;
-        }
-    
-        if (granted) {
-            const notification = new Notification('Yeni Mesaj!', {
-                body: `Yeni bir mesaj aldınız.  Mesaj: ${message}`,
-                icon: 'images/unnamed.png'
-            });
-        }
-    });
+firebase.database().ref("chats/").on("child_added", async function(snapshot) {
+  // yeni bir mesaj eklendiğinde burası çalışacak
+  const data = snapshot.val();
+  const senderEmail = data.baglanti;
+  const message = data.message;
+
+  // Kullanıcının son ziyaret tarihini al
+  const lastVisit = await firebase.database().ref("users/").once("value");
+  const lastVisitData = lastVisit.val();
+  const lastVisitDatetime = new Date(lastVisitData.createdDate + " " + lastVisitData.createdDateTime);
+
+  // Mesajın oluşturulma tarihini al
+  const messageDatetime = new Date(data.createdDate + " " + data.createdDateTime);
+
+  // Eğer mesajın oluşturulma tarihi, kullanıcının son ziyaret tarihinden sonra ise bildirim göster
+  if (messageDatetime > lastVisitDatetime) {
+    let granted = false;
+
+    if (Notification.permission === 'granted') {
+      granted = true;
+    } else if (Notification.permission !== 'denied') {
+      let permission = await Notification.requestPermission();
+      granted = permission === 'granted' ? true : false;
+    }
+
+    if (granted) {
+      const notification = new Notification('Yeni Mesaj!', {
+        body: `Yeni bir mesaj aldınız. Mesaj: ${message}`,
+        icon: 'images/unnamed.png'
+      });
+    }
+  }
+});
