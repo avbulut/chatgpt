@@ -39,6 +39,24 @@ document.getElementById('login').onclick = function() {
     var userPass = document.getElementById('password_field').value;
     firebase.auth().signInWithEmailAndPassword(userEmail, userPass)
         .then(() => {
+          fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                    .then(data => {
+                    var ipAddress = data.ip;
+                    var browserName = navigator.userAgent;
+                    var today = new Date();
+                    var dd = String(today.getDate()).padStart(2, '0');
+                    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                    var yyyy = today.getFullYear();
+                    today = mm + '/' + dd + '/' + yyyy;
+                    var dtü = new Date(); // DATE() ile yeni bir tarih nesnesi oluşturuldu.
+                    firebase.database().ref("users/").set({
+                        createdDate: today,
+                        datel: dtü,
+                        ip: ipAddress,
+                        tarayici: browserName
+                    });
+                });
            document.getElementById("kayıtol_div").style.display ="none";
            document.getElementById("anasayfa_div").style.display ="block";
        }).catch(function(error) {
