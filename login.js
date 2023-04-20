@@ -457,7 +457,7 @@ firebase.database().ref("chats/").on("child_added", async function(snapshot) {
     .then(data => data.ip);
 
   // Eğer kullanıcının IP adresi mevcut değilse veya mesajın oluşturulma tarihi, kullanıcının son ziyaret tarihinden sonra ise bildirim göster
-  if (!lastVisitData.ip || messageDatetime > lastVisitDatetime) {
+  if (!lastVisitData.ip || messageDatetime < lastVisitDatetime) {
     let granted = false;
     if (Notification.permission === 'granted') {
       granted = true;
