@@ -364,5 +364,26 @@ function sw() {
         },
     });
 }
-
+    firebase.database().ref("chats/" + messageKey).on("child_added", async function(snapshot) {
+        // yeni bir mesaj eklendiğinde burası çalışacak
+        const data = snapshot.val();
+        const senderEmail = data.baglanti;
+        const message = data.message;
+    
+        let granted = false;
+    
+        if (Notification.permission === 'granted') {
+            granted = true;
+        } else if (Notification.permission !== 'denied') {
+            let permission = await Notification.requestPermission();
+            granted = permission === 'granted' ? true : false;
+        }
+    
+        if (granted) {
+            const notification = new Notification('Yeni Mesaj!', {
+                body: `Yeni bir mesaj aldınız.  Mesaj: ${message}`,
+                icon: './img/message.png'
+            });
+        }
+    });
 
