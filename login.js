@@ -256,28 +256,22 @@ function ll() {
           buttons: "Tamam",
       });
     } else {
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        var yyyy = today.getFullYear();
-        today = mm + '/' + dd + '/' + yyyy;
-        var dt = new Date(); // DATE() ile yeni bir tarih nesnesi oluşturuldu.
-        var saat = dt.getHours();
-        var dakika = dt.getMinutes();
-        var user2 = firebase.auth().currentUser;
-        var email_id2 = user2.email;
-        var saniye = dt.getSeconds();
-        var messageKey = firebase.database().ref("chats/").push().key; //Rastgele bir mesaj keyi gönderir.
-        var createdDate = today;
-        var datel = dt;
+        var now = new Date();
+        var dd = String(now.getDate()).padStart(2, '0');
+        var mm = String(now.getMonth() + 1).padStart(2, '0');
+        var yyyy = now.getFullYear();
+        var hh = String(now.getHours()).padStart(2, '0');
+        var min = String(now.getMinutes()).padStart(2, '0');
+        var ss = String(now.getSeconds()).padStart(2, '0');
+        
+        var messageKey = firebase.database().ref("chats/").push().key;
         
         firebase.database().ref("chats/" + messageKey).set({
           message: mesaj,
           baglanti: email_id2,
-          createdDate: createdDate,
-          datel: datel
+          createdDate: dd + '/' + mm + '/' + yyyy,
+          createdTime: hh + ':' + min + ':' + ss
         });
-        
       
          //Otomatik olarak en alt kısma odakanılır
          var mesaj = document.getElementById("mesaj").value= "";
