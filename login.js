@@ -30,16 +30,14 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-
-
-
 /*------------------------------------------------------------------------------------------------------------*/
+
 document.getElementById('login').onclick = function() {
     var userEmail = document.getElementById('email_field').value;
     var userPass = document.getElementById('password_field').value;
     firebase.auth().signInWithEmailAndPassword(userEmail, userPass)
         .then(() => {
-          fetch('https://api.ipify.org?format=json')
+            fetch('https://api.ipify.org?format=json')
                 .then(response => response.json())
                     .then(data => {
                     var ipAddress = data.ip;
@@ -50,15 +48,19 @@ document.getElementById('login').onclick = function() {
                     var yyyy = today.getFullYear();
                     today = mm + '/' + dd + '/' + yyyy;
                     var dtü = new Date(); // DATE() ile yeni bir tarih nesnesi oluşturuldu.
+                    var saat = dtü.getHours();
+                    var dakika = dtü.getMinutes();
+                    var saniye = dtü.getSeconds();
                     firebase.database().ref("users/").set({
                         createdDate: today,
-                        datel: dtü,
+                        createdDateTime: saat + ":" + dakika + ":" + saniye,
                         ip: ipAddress,
                         tarayici: browserName
                     });
                 });
            document.getElementById("kayıtol_div").style.display ="none";
            document.getElementById("anasayfa_div").style.display ="block";
+           ll();
        }).catch(function(error) {
             var errorCode = error.code;
             var errorMessage = error.message;
@@ -69,9 +71,10 @@ document.getElementById('login').onclick = function() {
                 buttons: "Tamam",
             });
         });
-
 }
-        firebase.auth().onAuthStateChanged(function(user) {
+
+
+    firebase.auth().onAuthStateChanged(function(user) {
            var user = firebase.auth().currentUser;
            document.getElementById("kayıtol_div").style.display ="none";
            document.getElementById("anasayfa_div").style.display ="block";
@@ -81,13 +84,14 @@ document.getElementById('login').onclick = function() {
                   var email_id = user.email;
                   document.getElementById('user_para').innerHTML = email_id;
                   chatYukle();
+              
        
               }
           } else {
            document.getElementById("kayıtol_div").style.display ="block";
            document.getElementById("anasayfa_div").style.display ="none";           
        }
-       });
+    });
 
 /*------------------------------------------------------------------------------------------------------------*/
 
@@ -164,7 +168,7 @@ function gonder() {
         buttons: "Tamam",
     });
    }else{
-       firebase.auth().createUserWithEmailAndPassword(email_fi,password_fi)
+    firebase.auth().createUserWithEmailAndPassword(email_fi,password_fi)
        .then(function(userCredential){   
            // kullanıcının uid değerini alın
            //var userUid = userCredential.user.uid;
@@ -187,21 +191,20 @@ function gonder() {
                icon: "warning",
                button: "Tamam",
            });
-         });
+        });
    }
 }
 
 
 
-
+/*
 function ll() {
-   var browserName = navigator.userAgent;
  
    fetch('https://api.ipify.org?format=json')
    .then(response => response.json())
    .then(data => {
      var ipAddress = data.ip;
- 
+     var browserName = navigator.userAgent;
      var today = new Date();
      var dd = String(today.getDate()).padStart(2, '0');
      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -215,7 +218,7 @@ function ll() {
      var uid = user.uid;
      var email_id = user.email;
  
-     firebase.database().ref("users/" + uid).set({
+     firebase.database().ref("users/" + email_id).set({
        createdDate: today,
        datel: dtü,
        userkayıt: email_id,
@@ -234,7 +237,7 @@ function ll() {
      console.log("Error:", error);
    });
  }
-
+*/
 
 
  document.getElementById('logout').onclick = function() {
@@ -295,6 +298,7 @@ function ll() {
           createdDate: createdDate,
           createdDateTime: saat + ":" + dakika + ":" + saniye
         });
+        
       
          //Otomatik olarak en alt kısma odakanılır
          var mesaj = document.getElementById("mesaj").value= "";
@@ -381,6 +385,7 @@ function sw() {
         },
     });
 }
+
     firebase.database().ref("chats/").on("child_added", async function(snapshot) {
         // yeni bir mesaj eklendiğinde burası çalışacak
         const data = snapshot.val();
@@ -403,4 +408,3 @@ function sw() {
             });
         }
     });
-
