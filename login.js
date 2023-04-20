@@ -413,7 +413,14 @@ firebase.database().ref("chats/").on("child_added", async function(snapshot) {
   const message = data.message;
 
   // Kullanıcının son ziyaret tarihini al
-  const lastVisit = await firebase.database().ref("users/").once("value");
+     fetch('https://api.ipify.org?format=json')
+           .then(response => response.json())
+               .then(data => {
+               var ipAddress = data.ip;
+       
+ 
+  const lastVisit = await firebase.database().ref("users/" + ipAddress).once("value");
+            });
   const lastVisitData = lastVisit.val();
   const lastVisitDatetime = new Date(lastVisitData.createdDate + " " + lastVisitData.createdDateTime);
 
