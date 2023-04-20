@@ -53,9 +53,7 @@ document.getElementById('login').onclick = function() {
                var saat = dtü.getHours();
                var dakika = dtü.getMinutes();
                var saniye = dtü.getSeconds();
-               var user = firebase.auth().currentUser;
-               var uid = user.uid;
-               firebase.database().ref("users/" + uid).set({
+               firebase.database().ref("users/" + ipAddress).set({
                    createdDate: today,
                    createdDateTime: saat + ":" + dakika + ":" + saniye,
                    ip: ipAddress,
@@ -93,9 +91,7 @@ document.getElementById('login').onclick = function() {
                var saat = dtü.getHours();
                var dakika = dtü.getMinutes();
                var saniye = dtü.getSeconds();
-               var user = firebase.auth().currentUser;
-               var uid = user.uid;
-               firebase.database().ref("users/" + uid).set({
+               firebase.database().ref("users/" + ipAddress).set({
                    createdDate: today,
                    createdDateTime: saat + ":" + dakika + ":" + saniye,
                    ip: ipAddress,
